@@ -1,8 +1,15 @@
 version: 2.1
+<<<<<<< HEAD
 
 orbs:
   android: circleci/android@0.2.1
 
+=======
+ 
+orbs:
+  android: circleci/android@0.2.1
+ 
+>>>>>>> origin/circleci-project-setup
 jobs:
   build:
     executor: android/android
