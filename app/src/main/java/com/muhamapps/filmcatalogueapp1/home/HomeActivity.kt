@@ -1,5 +1,6 @@
 package com.muhamapps.filmcatalogueapp1.home
 
+import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -22,6 +23,8 @@ class HomeActivity : AppCompatActivity() {
 
     private var _binding: ActivityHomeBinding? = null
     private val binding get() = _binding
+
+    private lateinit var broadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,4 +87,5 @@ class HomeActivity : AppCompatActivity() {
             this?.adapter = filmAdapter
         }
     }
+
 }
