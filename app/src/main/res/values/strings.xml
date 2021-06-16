@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Film Catalogue</string>
+
+    <string name="menu_favorite">Favorite</string>
+
+    <string name="title_activity_detail_home">DetailHomeActivity</string>
+    <string name="no_data">Empty data</string>
+    <string name="something_wrong">Oops.. something went wrong</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="rating">9.7</string>
+    <string name="description">Description :</string>
+    <string name="poster">Poster</string>
+    <string name="favorite_button">Favorite Button</string>
+</resources>

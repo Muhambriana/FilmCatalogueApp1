@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_desc">Movie Poster</string>
+    <string name="text_primary">Title</string>
+    <string name="text_subtitle">9.9</string>
+
+</resources>
