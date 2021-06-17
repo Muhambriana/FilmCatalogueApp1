@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconColors">
+        <ignore path="src/main/res/drawable-xhdpi/ic_favorite.png" />
+    </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/icon_splash.png" />
+    </issue>
+</lint>
