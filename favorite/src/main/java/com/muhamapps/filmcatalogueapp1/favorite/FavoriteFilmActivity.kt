@@ -4,14 +4,17 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
+import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
-class FavoriteFilmActivity : AppCompatActivity() {
+class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
 
     private val favoriteFilmViewModel: FavoriteFilmViewModel by viewModel()
 
@@ -36,8 +39,19 @@ class FavoriteFilmActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    override fun onShareClick(data: Film) {
+        val mimeType = "text/plain"
+        @Suppress("DEPRECATION")
+        ShareCompat.IntentBuilder
+            .from(this)
+            .setType(mimeType)
+            .setChooserTitle("Bagikan aplikasi ini sekarang.")
+            .setText("Segera daftar kelas ${data.title} di dicoding.com")
+            .startChooser()
+    }
+
     private fun getFavoriteData() {
-        val filmAdapter = FilmAdapter()
+        val filmAdapter = FilmAdapter(this)
         filmAdapter.onItemClick = { selectedData ->
                 val intent = Intent(this, DetailFilmActivity::class.java)
                 intent.putExtra(DetailFilmActivity.EXTRA_DATA, selectedData)

@@ -28,12 +28,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:id="@+id/view"
+            android:layout_width="158dp"
+            android:layout_height="85dp"
             android:background="#7F000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -41,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="204dp"
+            android:layout_marginTop="192dp"
             android:layout_marginEnd="4dp"
             android:ellipsize="end"
             android:gravity="center"
@@ -49,7 +50,7 @@
             android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_item_image"
             tools:text="@string/text_primary" />
@@ -68,8 +69,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_title"
-            app:layout_constraintVertical_bias="0.842"
+            app:layout_constraintVertical_bias="0.363"
             tools:text="@string/text_subtitle" />
+
+        <ImageButton
+            android:id="@+id/img_share"
+            android:layout_width="43dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_title"
+            app:srcCompat="@drawable/ic_share"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

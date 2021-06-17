@@ -10,7 +10,7 @@ import com.muhamapps.filmcatalogueapp1.core.databinding.ItemListFilmBinding
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 
-class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ListViewHolder>() {
+class FilmAdapter(private val callback: FilmShareCallback) : RecyclerView.Adapter<FilmAdapter.ListViewHolder>() {
 
     private var listData = ArrayList<Film>()
     var onItemClick: ((Film) -> Unit)? = null
@@ -36,6 +36,7 @@ class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ListViewHolder>() {
         private val binding = ItemListFilmBinding.bind(itemView)
         fun bind(data: Film) {
             with(binding) {
+                imgShare.setOnClickListener { callback.onShareClick(data) }
                 Glide.with(itemView.context)
                     .load(IMAGE_URL + data.poster)
                     .into(ivItemImage)

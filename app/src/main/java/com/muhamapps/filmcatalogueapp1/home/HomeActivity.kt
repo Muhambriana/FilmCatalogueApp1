@@ -8,15 +8,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.muhamapps.filmcatalogueapp1.R
 import com.muhamapps.filmcatalogueapp1.core.data.Resource
+import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
+import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityHomeBinding
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
     private val homeViewModel: HomeViewModel by viewModel()
 
@@ -50,8 +53,19 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onShareClick(data: Film) {
+        val mimeType = "text/plain"
+        @Suppress("DEPRECATION")
+        ShareCompat.IntentBuilder
+            .from(this)
+            .setType(mimeType)
+            .setChooserTitle("Bagikan aplikasi ini sekarang.")
+            .setText("Lihat Film ${data.title} di themoviedb.org")
+            .startChooser()
+    }
+
     private fun getFilmData() {
-        val filmAdapter = FilmAdapter()
+        val filmAdapter = FilmAdapter(this)
         filmAdapter.onItemClick = { selectedData ->
             val intent = Intent(this, DetailFilmActivity::class.java)
             intent.putExtra(DetailFilmActivity.EXTRA_DATA, selectedData)
