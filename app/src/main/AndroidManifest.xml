@@ -13,17 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
-        tools:replace="icon, label">
-        <activity android:name=".home.HomeActivity">
+        tools:replace="icon, label"
+        android:fullBackupContent="@xml/backup_descriptor">
+        <activity android:name=".home.HomeActivity" />
+        <activity
+            android:name=".detail.DetailFilmActivity"
+            android:label="@string/title_activity_detail_home" />
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".detail.DetailFilmActivity"
-            android:label="@string/title_activity_detail_home" />
     </application>
 
 </manifest>
