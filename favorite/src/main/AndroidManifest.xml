@@ -16,7 +16,9 @@
 
     <application android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
-        <activity android:name=".FavoriteFilmActivity">
+        <activity
+            android:name=".FavoriteFilmActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>

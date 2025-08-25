@@ -16,11 +16,17 @@
         tools:replace="icon, label"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
-        <activity android:name=".home.HomeActivity" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:exported="false"
+            />
         <activity
             android:name=".detail.DetailFilmActivity"
-            android:label="@string/title_activity_detail_home" />
-        <activity android:name=".SplashScreenActivity">
+            android:label="@string/title_activity_detail_home"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
