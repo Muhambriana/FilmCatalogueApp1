@@ -7,15 +7,15 @@ plugins {
 apply from: '../shared_dependencies.gradle'
 
 android {
-    compileSdkVersion 31
+    compileSdk 34
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.muhamapps.filmcatalogueapp1"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdk 34
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +41,7 @@ android {
         viewBinding = true
     }
     dynamicFeatures = [':favorite']
+    namespace 'com.muhamapps.filmcatalogueapp1'
 }
 
 dependencies {

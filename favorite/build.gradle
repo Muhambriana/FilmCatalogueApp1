@@ -11,11 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.muhamapps.filmcatalogueapp1.favorite"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,6 +31,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    namespace 'com.muhamapps.filmcatalogueapp1.favorite'
 }
 
 dependencies {
