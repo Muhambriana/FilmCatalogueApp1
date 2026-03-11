@@ -10,7 +10,7 @@ import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityDetailFilmBinding
 
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFilmActivity : AppCompatActivity() {
 

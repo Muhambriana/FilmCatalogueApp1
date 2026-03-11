@@ -11,7 +11,7 @@ import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
 class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {

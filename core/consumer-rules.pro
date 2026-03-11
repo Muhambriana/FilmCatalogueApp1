@@ -85,3 +85,12 @@ public *;
 ##---------------Begin: proguard configuration for RxJava ----------
 # Uncomment if you use RxJava
 #-dontwarn java.util.concurrent.Flow*
+
+##---------------Begin: keep core module public API ----------
+-keep class com.muhamapps.filmcatalogueapp1.core.data.Resource { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.data.Resource$* { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.domain.model.** { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.domain.usecase.** { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.domain.repository.** { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.di.** { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.ui.** { *; }
