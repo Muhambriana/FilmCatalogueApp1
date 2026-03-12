@@ -15,6 +15,8 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
+            System.loadLibrary("sqlcipher")
+
             androidLogger(Level.NONE)
             androidContext(this@MyApplication)
             modules(
