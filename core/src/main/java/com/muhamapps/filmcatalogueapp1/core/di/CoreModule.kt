@@ -9,8 +9,8 @@ import com.muhamapps.filmcatalogueapp1.core.data.source.remote.network.ApiServic
 import com.muhamapps.filmcatalogueapp1.core.domain.repository.IFilmRepository
 import com.muhamapps.filmcatalogueapp1.core.utils.AppExecutors
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.BASE_URL
-import net.sqlcipher.database.SQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SQLiteDatabase
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit
 val databaseModule = module {
     factory { get<FilmDatabase>().filmDao() }
     single {
-        val passphrase: ByteArray = SQLiteDatabase.getBytes("dicoding".toCharArray())
-        val factory = SupportFactory(passphrase)
+        val passphrase: ByteArray = "dicoding".toByteArray(Charsets.UTF_8)
+        val factory = SupportOpenHelperFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             FilmDatabase::class.java, "Film.db"
