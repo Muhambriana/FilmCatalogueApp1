@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -12,7 +12,6 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -44,6 +43,12 @@ android {
         buildConfig = true
     }
     namespace 'com.muhamapps.filmcatalogueapp1.core'
+    lint {
+        targetSdk 36
+    }
+    testOptions {
+        targetSdk 36
+    }
 }
 
 dependencies {
@@ -51,7 +56,7 @@ dependencies {
     implementation libs.kotlin.stdlib
 
     implementation libs.room.runtime
-    kapt libs.room.compiler
+    ksp libs.room.compiler
     annotationProcessor libs.room.compiler
     androidTestImplementation libs.room.testing
 

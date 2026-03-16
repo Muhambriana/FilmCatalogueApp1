@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.dynamic.feature)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 apply from: '../shared_dependencies.gradle'
