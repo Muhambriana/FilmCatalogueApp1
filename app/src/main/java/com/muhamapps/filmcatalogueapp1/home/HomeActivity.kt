@@ -18,6 +18,7 @@ import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityHomeBinding
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.core.net.toUri
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
@@ -45,7 +46,7 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
-                val uriFavorite = Uri.parse("filmcatalogueapp1://favorite")
+                val uriFavorite = "filmcatalogueapp1://favorite".toUri()
                 startActivity(Intent(Intent.ACTION_VIEW, uriFavorite))
                 true
             }
