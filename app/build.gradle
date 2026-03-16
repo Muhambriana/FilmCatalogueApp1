@@ -52,4 +52,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // Add AndroidX SQLite libraries so Database Inspector can attach to the app's SQLite
+    implementation 'androidx.sqlite:sqlite:2.2.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.2.0'
+
 }
