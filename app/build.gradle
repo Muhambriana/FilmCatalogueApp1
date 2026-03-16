@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -44,16 +44,14 @@ android {
 }
 
 dependencies {
-
     implementation project(":core")
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation libs.androidx.constraintlayout
+    implementation libs.material
+    implementation libs.androidx.appcompat
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation libs.kotlin.stdlib
 
     // Add AndroidX SQLite libraries so Database Inspector can attach to the app's SQLite
-    implementation 'androidx.sqlite:sqlite:2.2.0'
-    implementation 'androidx.sqlite:sqlite-framework:2.2.0'
-
+    implementation libs.androidx.sqlite
+    implementation libs.androidx.sqlite.framework
 }

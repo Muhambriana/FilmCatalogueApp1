@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.dynamic-feature'
-    id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
+    alias(libs.plugins.android.dynamic.feature)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -36,5 +36,5 @@ android {
 dependencies {
     implementation project(":app")
     implementation project(":core")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation libs.kotlin.stdlib
 }
