@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -11,7 +11,7 @@ android {
     compileSdk 36
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -51,7 +51,7 @@ dependencies {
     implementation libs.kotlin.stdlib
 
     implementation libs.room.runtime
-    kapt libs.room.compiler
+    ksp libs.room.compiler
     annotationProcessor libs.room.compiler
     androidTestImplementation libs.room.testing
 
