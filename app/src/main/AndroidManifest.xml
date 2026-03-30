@@ -15,6 +15,9 @@
         tools:replace="icon, label"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${ADMOB_APP_ID}"/>
         <activity
             android:name=".home.HomeActivity"
             android:exported="false"

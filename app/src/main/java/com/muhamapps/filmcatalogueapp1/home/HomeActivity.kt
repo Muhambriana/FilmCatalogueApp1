@@ -19,6 +19,8 @@ import com.muhamapps.filmcatalogueapp1.databinding.ActivityHomeBinding
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.net.toUri
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
@@ -32,6 +34,11 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
         _binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         supportActionBar?.title = "Bmdb"
+
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+
+        binding?.adView?.loadAd(adRequest)
 
         getFilmData()
     }

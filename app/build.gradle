@@ -5,6 +5,14 @@ plugins {
 
 apply from: '../shared_dependencies.gradle'
 
+def localPropsFile = rootProject.file("local.properties")
+def localProps = new Properties()
+if (localPropsFile.exists()) {
+    localProps.load(new FileInputStream(localPropsFile))
+}
+
+def admobAppId = localProps.getProperty('admob_app_id') ?: ''
+
 android {
     compileSdk 36
 
@@ -14,6 +22,7 @@ android {
         targetSdk 36
         versionCode 6
         versionName "1.2.2"
+        manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
