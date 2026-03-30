@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.muhamapps.filmcatalogueapp1.R
@@ -19,26 +20,39 @@ import com.muhamapps.filmcatalogueapp1.databinding.ActivityHomeBinding
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat.enableEdgeToEdge
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.muhamapps.filmcatalogueapp1.BuildConfig
+import com.muhamapps.filmcatalogueapp1.utils.BannerManager
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
     private val homeViewModel: HomeViewModel by viewModel()
 
-    private var _binding: ActivityHomeBinding? = null
-    private val binding get() = _binding
+    private val binding: ActivityHomeBinding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        enableEdgeToEdge()
+        setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         supportActionBar?.title = "Bmdb"
 
         MobileAds.initialize(this)
-        val adRequest = AdRequest.Builder().build()
-
-        binding?.adView?.loadAd(adRequest)
+        BannerManager.loadBanner(this, binding.adViewContainer)
 
         getFilmData()
     }

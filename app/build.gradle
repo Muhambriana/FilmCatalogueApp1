@@ -13,6 +13,7 @@ if (localPropsFile.exists()) {
 }
 
 def admobAppId = localProps.getProperty('admob_app_id') ?: ''
+def admobBannerId = localProps.getProperty('admob_banner_id') ?: ''
 
 android {
     compileSdk 36
@@ -26,6 +27,8 @@ android {
         manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ADMOB_BANNER_ID", "\"${admobBannerId}\""
     }
 
     buildTypes {
@@ -47,6 +50,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     dynamicFeatures = [':favorite']
     namespace 'com.muhamapps.filmcatalogueapp1'

@@ -1,0 +1,22 @@
+package com.muhamapps.filmcatalogueapp1.utils
+
+import android.content.Context
+import android.widget.FrameLayout
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.muhamapps.filmcatalogueapp1.BuildConfig
+
+object BannerManager {
+
+    fun loadBanner(context: Context, container: FrameLayout) {
+        val adView = AdView(context).apply {
+            setAdSize(AdSize.BANNER)
+            adUnitId = BuildConfig.ADMOB_BANNER_ID
+            loadAd(AdRequest.Builder().build())
+        }
+
+        container.removeAllViews()
+        container.addView(adView)
+    }
+}
