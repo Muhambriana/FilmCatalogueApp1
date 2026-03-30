@@ -28,11 +28,13 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.muhamapps.filmcatalogueapp1.BuildConfig
-import com.muhamapps.filmcatalogueapp1.utils.BannerManager
+import com.muhamapps.filmcatalogueapp1.ads.BannerManager
+import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
     private val homeViewModel: HomeViewModel by viewModel()
+    private val bannerManager: BannerManager by inject()
 
     private val binding: ActivityHomeBinding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
@@ -51,8 +53,7 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
         supportActionBar?.title = "Bmdb"
 
-        MobileAds.initialize(this)
-        BannerManager.loadBanner(this, binding.adViewContainer)
+        bannerManager.loadBanner(this, binding.adViewContainer)
 
         getFilmData()
     }

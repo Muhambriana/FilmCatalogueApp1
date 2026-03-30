@@ -2,8 +2,11 @@ package com.muhamapps.filmcatalogueapp1.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.muhamapps.filmcatalogueapp1.R
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
@@ -15,12 +18,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DetailFilmActivity : AppCompatActivity() {
 
     private val detailFilmViewModel: DetailFilmViewModel by viewModel()
-    private lateinit var binding: ActivityDetailFilmBinding
+    private val binding: ActivityDetailFilmBinding by lazy {
+        ActivityDetailFilmBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailFilmBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 

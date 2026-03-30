@@ -1,4 +1,4 @@
-package com.muhamapps.filmcatalogueapp1.utils
+package com.muhamapps.filmcatalogueapp1.ads
 
 import android.content.Context
 import android.widget.FrameLayout
@@ -7,7 +7,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.muhamapps.filmcatalogueapp1.BuildConfig
 
-object BannerManager {
+class BannerManager {
 
     fun loadBanner(context: Context, container: FrameLayout) {
         val adView = AdView(context).apply {
