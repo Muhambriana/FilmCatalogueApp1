@@ -1,11 +1,21 @@
 plugins {
     alias(libs.plugins.android.library)
-//    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.ksp)
 }
 
 apply from: '../shared_dependencies.gradle'
+
+def localPropsFile = rootProject.file("local.properties")
+def localProps = new Properties()
+if (localPropsFile.exists()) {
+    localProps.load(new FileInputStream(localPropsFile))
+}
+
+def baseUrl = localProps.getProperty('base_url') ?: ''
+def baseUrlImage = localProps.getProperty('base_url_image') ?: ''
+def apiKey = localProps.getProperty('api_key') ?: ''
 
 android {
     compileSdk 36
@@ -17,9 +27,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-        buildConfigField "String", "IMAGE_URL", "\"https://image.tmdb.org/t/p/w500/\""
-        buildConfigField "String", "API_KEY", "\"4dac14f0f5a92bea4b545202588b3f57\""
+        buildConfigField "String", "BASE_URL", "\"${baseUrl}\""
+        buildConfigField "String", "BASE_URL_IMAGE", "\"${baseUrlImage}\""
+        buildConfigField "String", "API_KEY", "\"${apiKey}\""
     }
 
     buildTypes {
@@ -33,8 +43,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     buildFeatures {
         viewBinding = true
