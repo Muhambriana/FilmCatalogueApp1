@@ -11,8 +11,8 @@ class BannerManager {
 
     fun loadBanner(context: Context, container: FrameLayout) {
         val adView = AdView(context).apply {
-            setAdSize(AdSize.BANNER)
-            adUnitId = BuildConfig.ADMOB_BANNER_ID
+            setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, width))
+            adUnitId = "ca-app-pub-3432330311757220/3448327165"
             loadAd(AdRequest.Builder().build())
         }
 
