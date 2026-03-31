@@ -14,6 +14,7 @@ if (localPropsFile.exists()) {
 
 def admobAppId = localProps.getProperty('admob_app_id') ?: ''
 def admobBannerId = localProps.getProperty('admob_banner_id') ?: ''
+def admobInterstitialId = localProps.getProperty('admob_interstitial_id') ?: ''
 
 android {
     compileSdk 36
@@ -29,6 +30,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "ADMOB_BANNER_ID", "\"${admobBannerId}\""
+        buildConfigField "String", "ADMOB_INTERSTITIAL_ID", "\"${admobInterstitialId}\""
     }
 
     buildTypes {

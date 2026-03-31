@@ -26,7 +26,10 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.muhamapps.filmcatalogueapp1.BuildConfig
 import com.muhamapps.filmcatalogueapp1.ads.BannerManager
 import org.koin.android.ext.android.inject
@@ -54,6 +57,18 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
         supportActionBar?.title = "Bmdb"
 
         bannerManager.loadBanner(this, binding.adViewContainer)
+
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this, BuildConfig.ADMOB_INTERSTITIAL_ID, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    interstitialAd.show(this@HomeActivity)
+                }
+
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+
+                }
+            })
 
         getFilmData()
     }
