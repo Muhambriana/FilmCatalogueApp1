@@ -23,8 +23,8 @@ android {
         applicationId "com.muhamapps.filmcatalogueapp1"
         minSdkVersion 23
         targetSdk 36
-        versionCode 6
-        versionName "1.2.2"
+        versionCode 7
+        versionName "1.3.0"
         manifestPlaceholders["ADMOB_APP_ID"] = admobAppId
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
