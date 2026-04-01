@@ -9,19 +9,24 @@ import androidx.core.app.ShareCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
 import com.muhamapps.filmcatalogueapp1.ads.AdsManager
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
+import kotlin.getValue
 
 class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
 
     private val favoriteFilmViewModel: FavoriteFilmViewModel by viewModel()
-    private val adsManager: AdsManager by lazy { AdsManager() }
+    private val adsManager: AdsManager by inject()
 
     private val binding: ActivityFavoriteFilmBinding by lazy {
         ActivityFavoriteFilmBinding.inflate(layoutInflater)
@@ -43,7 +48,18 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
 
         loadKoinModules(favoriteFilmModule)
 
+        val callback = object: InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interstitialAd.show(this@FavoriteFilmActivity)
+            }
+
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+
+            }
+        }
+
         adsManager.loadBanner(this, binding.adViewContainer)
+        adsManager.loadInterstitial(this, callback)
 
         getFavoriteData()
 

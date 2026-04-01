@@ -9,11 +9,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.muhamapps.filmcatalogueapp1.R
+import com.muhamapps.filmcatalogueapp1.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityDetailFilmBinding
+import org.koin.android.ext.android.inject
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.getValue
 
 class DetailFilmActivity : AppCompatActivity() {
 
@@ -21,6 +24,7 @@ class DetailFilmActivity : AppCompatActivity() {
     private val binding: ActivityDetailFilmBinding by lazy {
         ActivityDetailFilmBinding.inflate(layoutInflater)
     }
+    private val adsManager: AdsManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,7 @@ class DetailFilmActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        adsManager.loadBanner(this, binding.adViewContainer)
 
         val detailFilm = intent.getParcelableExtra<Film>(EXTRA_DATA)
         showDetailFilm(detailFilm)

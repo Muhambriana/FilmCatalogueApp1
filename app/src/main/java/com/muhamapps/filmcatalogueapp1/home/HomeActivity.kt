@@ -61,7 +61,6 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
             }
         }
 
-        adsManager.loadBanner(this, binding.adViewContainer)
         adsManager.loadInterstitial(this, callback)
 
         getFilmData()
