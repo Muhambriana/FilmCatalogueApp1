@@ -2,7 +2,6 @@ package com.muhamapps.filmcatalogueapp1.home
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -21,23 +20,19 @@ import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.muhamapps.filmcatalogueapp1.BuildConfig
-import com.muhamapps.filmcatalogueapp1.ads.BannerManager
+import com.muhamapps.filmcatalogueapp1.ads.AdsManager
 import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private val bannerManager: BannerManager by inject()
+    private val adsManager: AdsManager by inject()
 
     private val binding: ActivityHomeBinding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
@@ -56,19 +51,18 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
 
         supportActionBar?.title = "Bmdb"
 
-        bannerManager.loadBanner(this, binding.adViewContainer)
+        val callback = object: InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interstitialAd.show(this@HomeActivity)
+            }
 
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, BuildConfig.ADMOB_INTERSTITIAL_ID, adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    interstitialAd.show(this@HomeActivity)
-                }
+            override fun onAdFailedToLoad(p0: LoadAdError) {
 
-                override fun onAdFailedToLoad(p0: LoadAdError) {
+            }
+        }
 
-                }
-            })
+        adsManager.loadBanner(this, binding.adViewContainer)
+        adsManager.loadInterstitial(this, callback)
 
         getFilmData()
     }

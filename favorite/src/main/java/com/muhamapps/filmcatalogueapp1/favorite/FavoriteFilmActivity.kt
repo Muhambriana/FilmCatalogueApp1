@@ -9,20 +9,19 @@ import androidx.core.app.ShareCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.gms.ads.MobileAds
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
-import com.muhamapps.filmcatalogueapp1.ads.BannerManager
+import com.muhamapps.filmcatalogueapp1.ads.AdsManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
 class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
 
     private val favoriteFilmViewModel: FavoriteFilmViewModel by viewModel()
-    private val bannerManager: BannerManager by lazy { BannerManager() }
+    private val adsManager: AdsManager by lazy { AdsManager() }
 
     private val binding: ActivityFavoriteFilmBinding by lazy {
         ActivityFavoriteFilmBinding.inflate(layoutInflater)
@@ -44,7 +43,7 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
 
         loadKoinModules(favoriteFilmModule)
 
-        bannerManager.loadBanner(this, binding.adViewContainer)
+        adsManager.loadBanner(this, binding.adViewContainer)
 
         getFavoriteData()
 
