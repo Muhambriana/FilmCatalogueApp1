@@ -56,17 +56,22 @@ class DetailFilmActivity : AppCompatActivity() {
             val paragraphs = fullDesc.split("\n")
             val half = paragraphs.size / 2
 
-            val topDesc = paragraphs.subList(0, half).joinToString("\n\n")
-            val botDesc = paragraphs.subList(half, paragraphs.size).joinToString("\n\n")
-
             binding.progressBar.visibility = View.GONE
             supportActionBar?.title = detailFilm.title
             binding.rate.text = detailFilm.rating
-            binding.tvDetailDescriptionTop.text = topDesc
-            binding.tvDetailDescriptionBottom.text = botDesc
             Glide.with(this@DetailFilmActivity)
                 .load(IMAGE_URL + detailFilm.poster)
                 .into(binding.ivDetailImage)
+
+            if (half == 0) {
+                binding.tvDetailDescriptionTop.text = fullDesc
+            } else {
+                val topDesc = paragraphs.subList(0, half).joinToString("\n\n")
+                val botDesc = paragraphs.subList(half, paragraphs.size).joinToString("\n\n")
+
+                binding.tvDetailDescriptionTop.text = topDesc
+                binding.tvDetailDescriptionBottom.text = botDesc
+            }
 
             var statusFavorite = detailFilm.isFavorite
             setStatusFavorite(statusFavorite)
