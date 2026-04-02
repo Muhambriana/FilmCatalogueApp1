@@ -52,10 +52,18 @@ class DetailFilmActivity : AppCompatActivity() {
 
     private fun showDetailFilm(detailFilm: Film?) {
         detailFilm?.let {
+            val fullDesc = detailFilm.description
+            val paragraphs = fullDesc.split("\n")
+            val half = paragraphs.size / 2
+
+            val topDesc = paragraphs.subList(0, half).joinToString("\n\n")
+            val botDesc = paragraphs.subList(half, paragraphs.size).joinToString("\n\n")
+
             binding.progressBar.visibility = View.GONE
             supportActionBar?.title = detailFilm.title
             binding.rate.text = detailFilm.rating
-            binding.tvDetailDescription.text = detailFilm.description
+            binding.tvDetailDescriptionTop.text = topDesc
+            binding.tvDetailDescriptionBottom.text = botDesc
             Glide.with(this@DetailFilmActivity)
                 .load(IMAGE_URL + detailFilm.poster)
                 .into(binding.ivDetailImage)
