@@ -16,6 +16,8 @@ if (localPropsFile.exists()) {
 def baseUrl = localProps.getProperty('base_url') ?: ''
 def baseUrlImage = localProps.getProperty('base_url_image') ?: ''
 def apiKey = localProps.getProperty('api_key') ?: ''
+def admobBannerId = localProps.getProperty('admob_banner_id') ?: ''
+def admobInterstitialId = localProps.getProperty('admob_interstitial_id') ?: ''
 
 android {
     compileSdk 36
@@ -30,6 +32,8 @@ android {
         buildConfigField "String", "BASE_URL", "\"${baseUrl}\""
         buildConfigField "String", "BASE_URL_IMAGE", "\"${baseUrlImage}\""
         buildConfigField "String", "API_KEY", "\"${apiKey}\""
+        buildConfigField "String", "ADMOB_BANNER_ID", "\"${admobBannerId}\""
+        buildConfigField "String", "ADMOB_INTERSTITIAL_ID", "\"${admobInterstitialId}\""
     }
 
     buildTypes {
