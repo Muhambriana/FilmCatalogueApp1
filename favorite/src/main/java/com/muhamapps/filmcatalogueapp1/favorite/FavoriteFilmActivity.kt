@@ -17,7 +17,8 @@ import com.muhamapps.filmcatalogueapp1.core.ui.FilmAdapter
 import com.muhamapps.filmcatalogueapp1.core.ui.FilmShareCallback
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
-import com.muhamapps.filmcatalogueapp1.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.domain.model.GridItem
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -82,7 +83,7 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
     }
 
     private fun getFavoriteData() {
-        val filmAdapter = FilmAdapter(this)
+        val filmAdapter = FilmAdapter(this, adsManager)
         filmAdapter.onItemClick = { selectedData ->
                 val intent = Intent(this, DetailFilmActivity::class.java)
                 intent.putExtra(DetailFilmActivity.EXTRA_DATA, selectedData)
@@ -90,7 +91,7 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
             }
 
             favoriteFilmViewModel.favoriteFilm.observe(this, { dataFilm ->
-                filmAdapter.setData(dataFilm)
+                filmAdapter.setData(dataFilm as List<GridItem.Content>)
             })
 
             with(binding?.rvFilm) {

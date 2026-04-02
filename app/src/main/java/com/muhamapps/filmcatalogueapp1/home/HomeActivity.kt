@@ -21,12 +21,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.muhamapps.filmcatalogueapp1.BuildConfig
-import com.muhamapps.filmcatalogueapp1.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.domain.model.GridItem
 import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
@@ -96,7 +95,7 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
     }
 
     private fun getFilmData() {
-        val filmAdapter = FilmAdapter(this)
+        val filmAdapter = FilmAdapter(this, adsManager)
         filmAdapter.onItemClick = { selectedData ->
             val intent = Intent(this, DetailFilmActivity::class.java)
             intent.putExtra(DetailFilmActivity.EXTRA_DATA, selectedData)
@@ -109,7 +108,8 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
                     is Resource.Loading -> binding?.progressBar?.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding?.progressBar?.visibility = View.GONE
-                        filmAdapter.setData(film.data)
+                        adsManager.preLoads(this, 3)
+                        filmAdapter.setData(film.data as List<GridItem.Content>)
                     }
                     is Resource.Error -> {
                         binding?.progressBar?.visibility = View.GONE
@@ -118,13 +118,18 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
             }
         })
 
-        with(binding?.rvFilm) {
-            this?.layoutManager =
-                if (this?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    GridLayoutManager(context,2)
-                } else {
-                    GridLayoutManager(this?.context,4)
+
+        val layoutManager = GridLayoutManager(this, 2).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (filmAdapter.getItemViewType(position) == FilmAdapter.VIEW_TYPE_AD) 2
+                    else 1
                 }
+            }
+        }
+
+        with(binding?.rvFilm) {
+            this?.layoutManager = layoutManager
             this?.setHasFixedSize(true)
             this?.adapter = filmAdapter
         }

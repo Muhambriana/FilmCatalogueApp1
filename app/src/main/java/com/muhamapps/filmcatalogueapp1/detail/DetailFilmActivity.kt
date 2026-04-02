@@ -9,7 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.muhamapps.filmcatalogueapp1.R
-import com.muhamapps.filmcatalogueapp1.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityDetailFilmBinding

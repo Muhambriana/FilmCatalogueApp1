@@ -1,6 +1,6 @@
 package com.muhamapps.filmcatalogueapp1.di
 
-import com.muhamapps.filmcatalogueapp1.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.usecase.FilmInteractor
 import com.muhamapps.filmcatalogueapp1.core.domain.usecase.FilmUseCase
 import com.muhamapps.filmcatalogueapp1.detail.DetailFilmViewModel
