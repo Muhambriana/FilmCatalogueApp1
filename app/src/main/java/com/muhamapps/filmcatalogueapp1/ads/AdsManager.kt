@@ -16,7 +16,7 @@ class AdsManager {
     fun loadBanner(context: Context, container: FrameLayout) {
         val adRequest = AdRequest.Builder().build()
         val adView = AdView(context).apply {
-            setAdSize(AdSize.getInlineAdaptiveBannerAdSize(AdSize.FULL_WIDTH, 60))
+            setAdSize(AdSize.getInlineAdaptiveBannerAdSize(AdSize.FULL_WIDTH, 300))
             adUnitId = BuildConfig.ADMOB_BANNER_ID
             loadAd(adRequest)
         }
