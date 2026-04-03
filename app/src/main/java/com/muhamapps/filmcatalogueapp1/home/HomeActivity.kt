@@ -110,7 +110,10 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
                     is Resource.Success -> {
                         binding?.progressBar?.visibility = View.GONE
 
-                        val totalAd = film.data?.size?.div(Config.TOTAL_ITEM_PER_AD) ?: 0
+                        val totalAd = film.data?.size?.let {
+                            if (it % 2 == 0) it / Config.TOTAL_ITEM_PER_AD
+                            else it / Config.TOTAL_ITEM_PER_AD + 1
+                        } ?: 0
 
                         adsManager.preLoads(this, totalAd)
                         val contentList = film.data?.map {

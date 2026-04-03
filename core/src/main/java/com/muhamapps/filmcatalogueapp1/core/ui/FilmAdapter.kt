@@ -48,7 +48,7 @@ class FilmAdapter(
             result.add(item)
 
             val isInsertAd = ((normalIndex / Config.TOTAL_ITEM_PER_AD) > 0) && (normalIndex % Config.TOTAL_ITEM_PER_AD == 0)
-            if (isInsertAd) {
+            if (isInsertAd || idx == list.lastIndex) {
                 result.add(GridItem.Ad)
             }
         }

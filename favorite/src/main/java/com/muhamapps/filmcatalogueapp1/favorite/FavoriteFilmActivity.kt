@@ -92,7 +92,10 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
         }
 
         favoriteFilmViewModel.favoriteFilm.observe(this, { dataFilm ->
-            val totalAd = dataFilm?.size?.div(Config.TOTAL_ITEM_PER_AD) ?: 0
+            val totalAd = dataFilm?.size?.let {
+                if (it % 2 == 0) it / Config.TOTAL_ITEM_PER_AD
+                else it / Config.TOTAL_ITEM_PER_AD + 1
+            } ?: 0
             adsManager.preLoads(this, totalAd)
             val contentList = dataFilm?.map {
                 GridItem.Content(it)
