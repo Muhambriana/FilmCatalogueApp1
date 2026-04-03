@@ -11,6 +11,8 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAd
+import com.muhamapps.filmcatalogueapp1.core.BuildConfig
+
 //import com.muhamapps.filmcatalogueapp1.BuildConfig
 
 class AdsManager {
@@ -22,7 +24,7 @@ class AdsManager {
         val adRequest = AdRequest.Builder().build()
         val adView = AdView(context).apply {
             setAdSize(AdSize.getInlineAdaptiveBannerAdSize(AdSize.FULL_WIDTH, 300))
-            adUnitId = "BuildConfig.ADMOB_BANNER_ID"
+            adUnitId = BuildConfig.ADMOB_BANNER_ID
             loadAd(adRequest)
         }
 
@@ -32,15 +34,15 @@ class AdsManager {
 
     fun loadInterstitial(activity: Activity, callback: InterstitialAdLoadCallback) {
         val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(activity, "BuildConfig.ADMOB_INTERSTITIAL_ID", adRequest, callback)
+        InterstitialAd.load(activity, BuildConfig.ADMOB_INTERSTITIAL_ID, adRequest, callback)
     }
 
-    fun preLoads(context: Context, count: Int = 3) {
+    fun preLoads(context: Context, count: Int) {
         if (isLoading || adPool.size >= count) return
 
         isLoading = true
 
-        val adLoader = AdLoader.Builder(context, "BuildConfig.ADMOB_BANNER_ID")
+        val adLoader = AdLoader.Builder(context, BuildConfig.ADMOB_NATIVE_ID)
             .forNativeAd { ad ->
                 adPool.add(ad)
                 isLoading = false

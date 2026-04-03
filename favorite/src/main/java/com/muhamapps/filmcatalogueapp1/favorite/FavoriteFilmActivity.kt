@@ -3,6 +3,7 @@ package com.muhamapps.filmcatalogueapp1.favorite
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -19,6 +20,7 @@ import com.muhamapps.filmcatalogueapp1.detail.DetailFilmActivity
 import com.muhamapps.filmcatalogueapp1.favorite.databinding.ActivityFavoriteFilmBinding
 import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.model.GridItem
+import com.muhamapps.filmcatalogueapp1.core.utils.Config
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -59,7 +61,6 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
             }
         }
 
-        adsManager.loadBanner(this, binding.adViewContainer)
         adsManager.loadInterstitial(this, callback)
 
         getFavoriteData()
@@ -88,21 +89,35 @@ class FavoriteFilmActivity : AppCompatActivity(), FilmShareCallback {
                 val intent = Intent(this, DetailFilmActivity::class.java)
                 intent.putExtra(DetailFilmActivity.EXTRA_DATA, selectedData)
                 startActivity(intent)
-            }
+        }
 
-            favoriteFilmViewModel.favoriteFilm.observe(this, { dataFilm ->
-                filmAdapter.setData(dataFilm as List<GridItem.Content>)
-            })
-
-            with(binding?.rvFilm) {
-                this?.layoutManager =
-                    if (this?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        GridLayoutManager(context,2)
-                    } else {
-                        GridLayoutManager(this?.context,4)
-                    }
-                this?.setHasFixedSize(true)
-                this?.adapter = filmAdapter
+        favoriteFilmViewModel.favoriteFilm.observe(this, { dataFilm ->
+            val totalAd = dataFilm?.size?.div(Config.TOTAL_ITEM_PER_AD) ?: 0
+            adsManager.preLoads(this, totalAd)
+            val contentList = dataFilm?.map {
+                GridItem.Content(it)
             }
+            filmAdapter.setData(contentList)
+        })
+
+        val layoutManager = GridLayoutManager(this, 2).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (filmAdapter.getItemViewType(position) == FilmAdapter.VIEW_TYPE_AD) 2
+                    else 1
+                }
+            }
+        }
+
+        with(binding?.rvFilm) {
+            this?.layoutManager = layoutManager
+            this?.setHasFixedSize(true)
+            this?.adapter = filmAdapter
+        }
+    }
+
+    override fun onDestroy() {
+        adsManager.destroy()
+        super.onDestroy()
     }
 }

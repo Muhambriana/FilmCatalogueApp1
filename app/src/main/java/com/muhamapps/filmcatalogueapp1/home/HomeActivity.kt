@@ -26,6 +26,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.model.GridItem
+import com.muhamapps.filmcatalogueapp1.core.utils.Config
 import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity(), FilmShareCallback {
@@ -108,8 +109,14 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
                     is Resource.Loading -> binding?.progressBar?.visibility = View.VISIBLE
                     is Resource.Success -> {
                         binding?.progressBar?.visibility = View.GONE
-                        adsManager.preLoads(this, 3)
-                        filmAdapter.setData(film.data as List<GridItem.Content>)
+
+                        val totalAd = film.data?.size?.div(Config.TOTAL_ITEM_PER_AD) ?: 0
+
+                        adsManager.preLoads(this, totalAd)
+                        val contentList = film.data?.map {
+                            GridItem.Content(it)
+                        }
+                        filmAdapter.setData(contentList)
                     }
                     is Resource.Error -> {
                         binding?.progressBar?.visibility = View.GONE
@@ -135,4 +142,8 @@ class HomeActivity : AppCompatActivity(), FilmShareCallback {
         }
     }
 
+    override fun onDestroy() {
+        adsManager.destroy()
+        super.onDestroy()
+    }
 }

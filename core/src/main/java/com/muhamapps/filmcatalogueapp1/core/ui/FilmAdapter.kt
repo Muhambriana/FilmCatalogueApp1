@@ -3,6 +3,7 @@ package com.muhamapps.filmcatalogueapp1.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,8 +15,10 @@ import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.domain.model.GridItem
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 import androidx.core.view.isNotEmpty
+import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
+import com.muhamapps.filmcatalogueapp1.core.utils.Config
 
 class FilmAdapter(
     private val callback: FilmShareCallback,
@@ -33,7 +36,7 @@ class FilmAdapter(
     fun setData(newListData: List<GridItem.Content>?) {
         if (newListData == null) return
         listData.clear()
-        listData.addAll(newListData)
+        listData.addAll(insertAds(newListData))
         notifyDataSetChanged()
     }
 
@@ -41,9 +44,11 @@ class FilmAdapter(
         val result = mutableListOf<GridItem>()
 
         list.forEachIndexed { idx, item ->
+            val normalIndex = idx + 1
             result.add(item)
 
-            if ((idx + 1) % 3 == 0) {
+            val isInsertAd = ((normalIndex / Config.TOTAL_ITEM_PER_AD) > 0) && (normalIndex % Config.TOTAL_ITEM_PER_AD == 0)
+            if (isInsertAd) {
                 result.add(GridItem.Ad)
             }
         }
@@ -142,16 +147,63 @@ class FilmAdapter(
             binding.root.addView(adView)
         }
 
-        private fun populate(
-            ad: NativeAd,
-            adView: NativeAdView
-        ) {
-            val headline = adView.findViewById<TextView>(R.id.ad_headline)
+        private fun populate(ad: NativeAd, adView: NativeAdView) {
+            val context = adView.context
 
+            // Find view references matching the XML layout IDs
+            val headline = adView.findViewById<TextView>(R.id.ad_headline)
+            val body = adView.findViewById<TextView?>(R.id.ad_body)
+            val cta = adView.findViewById<TextView?>(R.id.ad_call_to_action)
+            val iconView = adView.findViewById<ImageView?>(R.id.ad_app_icon)
+            val mediaView = adView.findViewById<MediaView?>(R.id.ad_media)
+
+            // Headline (required)
             adView.headlineView = headline
             headline.text = ad.headline
 
+            // Body (optional)
+            if (ad.body != null && body != null) {
+                adView.bodyView = body
+                body.text = ad.body
+                body.visibility = View.VISIBLE
+            } else {
+                body?.visibility = View.GONE
+            }
+
+            // Call to action (optional)
+            if (ad.callToAction != null && cta != null) {
+                adView.callToActionView = cta
+                cta.text = ad.callToAction
+                cta.visibility = View.VISIBLE
+            } else {
+                cta?.visibility = View.GONE
+            }
+
+            // Icon (optional) — uses ad_app_icon from layout
+            if (ad.icon != null && iconView != null) {
+                adView.iconView = iconView
+                val iconUri = ad.icon?.uri
+                if (iconUri != null) {
+                    Glide.with(context).load(iconUri).into(iconView)
+                    iconView.visibility = View.VISIBLE
+                } else {
+                    iconView.visibility = View.GONE
+                }
+            } else {
+                iconView?.visibility = View.GONE
+            }
+
+            // Media content (optional)
+            if (ad.mediaContent != null && mediaView != null) {
+                adView.mediaView = mediaView
+                mediaView.visibility = View.VISIBLE
+            } else {
+                mediaView?.visibility = View.GONE
+            }
+
+            // Attach the native ad to the view
             adView.setNativeAd(ad)
         }
+
     }
 }
