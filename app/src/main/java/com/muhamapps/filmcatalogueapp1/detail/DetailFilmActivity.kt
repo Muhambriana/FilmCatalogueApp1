@@ -2,27 +2,44 @@ package com.muhamapps.filmcatalogueapp1.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.muhamapps.filmcatalogueapp1.R
+import com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
 import com.muhamapps.filmcatalogueapp1.core.domain.model.Film
 import com.muhamapps.filmcatalogueapp1.core.utils.NetworkInfo.IMAGE_URL
 import com.muhamapps.filmcatalogueapp1.databinding.ActivityDetailFilmBinding
+import org.koin.android.ext.android.inject
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.getValue
 
 class DetailFilmActivity : AppCompatActivity() {
 
     private val detailFilmViewModel: DetailFilmViewModel by viewModel()
-    private lateinit var binding: ActivityDetailFilmBinding
+    private val binding: ActivityDetailFilmBinding by lazy {
+        ActivityDetailFilmBinding.inflate(layoutInflater)
+    }
+    private val adsManager: AdsManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailFilmBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        adsManager.loadBanner(this, binding.adViewContainer)
 
         val detailFilm = intent.getParcelableExtra<Film>(EXTRA_DATA)
         showDetailFilm(detailFilm)
@@ -35,13 +52,26 @@ class DetailFilmActivity : AppCompatActivity() {
 
     private fun showDetailFilm(detailFilm: Film?) {
         detailFilm?.let {
+            val fullDesc = detailFilm.description
+            val paragraphs = fullDesc.split("\n")
+            val half = paragraphs.size / 2
+
             binding.progressBar.visibility = View.GONE
             supportActionBar?.title = detailFilm.title
             binding.rate.text = detailFilm.rating
-            binding.tvDetailDescription.text = detailFilm.description
             Glide.with(this@DetailFilmActivity)
                 .load(IMAGE_URL + detailFilm.poster)
                 .into(binding.ivDetailImage)
+
+            if (half == 0) {
+                binding.tvDetailDescriptionTop.text = fullDesc
+            } else {
+                val topDesc = paragraphs.subList(0, half).joinToString("\n\n")
+                val botDesc = paragraphs.subList(half, paragraphs.size).joinToString("\n\n")
+
+                binding.tvDetailDescriptionTop.text = topDesc
+                binding.tvDetailDescriptionBottom.text = botDesc
+            }
 
             var statusFavorite = detailFilm.isFavorite
             setStatusFavorite(statusFavorite)

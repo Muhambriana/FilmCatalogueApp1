@@ -6,7 +6,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.espresso.core
-    implementation libs.androidx.multidex
+//    implementation libs.androidx.multidex
 
     implementation libs.androidx.cardview
     implementation libs.androidx.recyclerview
@@ -16,6 +16,10 @@ dependencies {
     //koin
     implementation libs.koin.core
     implementation libs.koin.android
+
+    implementation(libs.play.services.ads)
+
+    implementation libs.androidx.activity
 
     //leak canary
     debugImplementation libs.leakcanary.android

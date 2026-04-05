@@ -1,9 +1,11 @@
 package com.muhamapps.filmcatalogueapp1
 
 import android.app.Application
+import com.google.android.gms.ads.MobileAds
 import com.muhamapps.filmcatalogueapp1.core.di.databaseModule
 import com.muhamapps.filmcatalogueapp1.core.di.networkModule
 import com.muhamapps.filmcatalogueapp1.core.di.repositoryModule
+import com.muhamapps.filmcatalogueapp1.di.adsModule
 import com.muhamapps.filmcatalogueapp1.di.useCaseModule
 import com.muhamapps.filmcatalogueapp1.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -25,9 +27,12 @@ class MyApplication : Application() {
                     networkModule,
                     repositoryModule,
                     useCaseModule,
-                    viewModelModule
+                    viewModelModule,
+                    adsModule
                 )
             )
         }
+
+        MobileAds.initialize(this)
     }
 }

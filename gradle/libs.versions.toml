@@ -1,20 +1,21 @@
 [versions]
-android-gradle-plugin = "9.0.1"
-#android-gradle-plugin = "8.13.2"
+#android-gradle-plugin = "9.0.1"
+android-gradle-plugin = "8.13.2"
 ksp = "2.3.4"
 kotlin = "2.3.20"
 appcompat = "1.7.1"
 core-ktx = "1.18.0"
 constraintlayout = "2.2.1"
 legacy-support-v4 = "1.0.0"
-junit = "4.13.1"
-androidx-junit = "1.1.2"
-espresso = "3.3.0"
+junit = "4.13.2"
+androidx-junit = "1.3.0"
+espresso = "3.7.0"
 multidex = "2.0.1"
 cardview = "1.0.0"
+play-services-ads = "25.1.0"
 recyclerview = "1.4.0"
 material = "1.13.0"
-glide = "4.16.0"
+glide = "5.0.5"
 room = "2.8.4"
 retrofit = "3.0.0"
 okhttp-logging-interceptor = "5.3.2"
@@ -25,6 +26,7 @@ leakcanary = "2.14"
 sqlite = "2.6.2"
 sqlite-ktx = "2.6.2"
 sqlcipher = "4.13.0"
+activity = "1.12.4"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -43,6 +45,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -57,6 +60,7 @@ sqlcipher-android = { module = "net.zetetic:sqlcipher-android", version.ref = "s
 androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqlite-ktx" }
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "sqlite" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }

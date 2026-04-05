@@ -94,3 +94,7 @@ public *;
 -keep class com.muhamapps.filmcatalogueapp1.core.domain.repository.** { *; }
 -keep class com.muhamapps.filmcatalogueapp1.core.di.** { *; }
 -keep class com.muhamapps.filmcatalogueapp1.core.ui.** { *; }
+-keep class com.muhamapps.filmcatalogueapp1.core.ads.AdsManager { *; }
+
+
+-dontwarn com.muhamapps.filmcatalogueapp1.core.ads.AdsManager
